@@ -1,0 +1,301 @@
+{% extends 'kucg/base.html' %}
+{% load static %}
+{% block head %} 
+  <script src="https://js.cx/libs/animate.js"></script>
+{% endblock %}
+{% block content %}
+  <div id="top-div">
+    <p class="top-p1">Kumamoto University</p>
+    <img class="top-p2" src="{% static 'img/kucg/set_images/shin.svg' %}">
+    <img class="top-img1" src="{% static 'img/kucg/set_images/top-onpu1.svg' %}">
+    <img class="top-img2" src="{% static 'img/kucg/set_images/onpu1.svg' %}">
+    <img class="top-img3" src="{% static 'img/kucg/set_images/onpu1.svg' %}">
+    <img class="top-guitar" src="{% static 'img/kucg/set_images/top-guitar.svg' %}">
+    <img class="topimage" src="{{ top_image.img.url }}" alt="{{ top_image.top_alt }}">  
+  </div>
+
+  <header class="pc" id="top-pc">
+    <p class="title-t">熊本クラシックギターサークル</p>
+    <a style="width: 5%;" href="{% url 'Top' %}">TOP</a>
+    <a style="font-size: 15px;font-weight: normal;" href="{% url 'Article_str' '新入生' 1 %}">新入生へ</a>
+    <a href="{% url 'Activity' 1 %}">ACTIVITY</a>
+    <a href="{% url 'Contact' %}">CONTACT</a>
+  </header>
+
+  <div class="warpper">
+    <div class="main">
+    <!-- サークル紹介 -->
+      <div class="top-section">
+        <div class="iconbox">
+          <img class="iconbox-img" src="{% static 'img/kucg/set_images/icon_guitar1.svg' %}">
+          <p class="iconbox-title">Greeting</p>
+          <div class="iconbox-div color-box1" ><img src="{% static 'img/kucg/set_images/onpu1.svg' %}"></div>
+          <div class="iconbox-div color-box2" ><img src="{% static 'img/kucg/set_images/onpu2.svg' %}"></div>
+          <div class="iconbox-div color-box3" ><img src="{% static 'img/kucg/set_images/onpu3.svg' %}"></div>
+          <div class="iconbox-div color-box4" ><img src="{% static 'img/kucg/set_images/onpu4.svg' %}"></div>
+          <div class="iconbox-div color-box5" ><img src="{% static 'img/kucg/set_images/onpu1.svg' %}"></div>
+        </div>
+        <div class="introduction">
+          <img id="introduction-img" src="{{ introduction.img.url }}">
+          <p class="introducer">部長：{{　introduction.introducer　}}</p>
+          <p class="introduce-text">{{　introduction.introduce　}}</p>
+        </div>
+      </div>
+      <div class="three-icons">
+          <span></span>
+          <span></span>
+          <span></span>
+      </div>
+      <div class="top-section">
+        <!-- NEWS部分 -->
+        <div class="iconbox" >
+          <img class="iconbox-img" src="{% static 'img/kucg/set_images/icon_guitar1.svg' %}">
+          <p class="iconbox-title">News</p>
+          <div class="iconbox-div color-box1" ><img src="{% static 'img/kucg/set_images/onpu1.svg' %}"></div>
+          <div class="iconbox-div color-box2" ><img src="{% static 'img/kucg/set_images/onpu2.svg' %}"></div>
+          <div class="iconbox-div color-box3" ><img src="{% static 'img/kucg/set_images/onpu3.svg' %}"></div>
+          <div class="iconbox-div color-box4" ><img src="{% static 'img/kucg/set_images/onpu4.svg' %}"></div>
+          <div class="iconbox-div color-box5" ><img src="{% static 'img/kucg/set_images/onpu1.svg' %}"></div>
+        </div>
+        <div class="news-box" id="news-box">
+          {% for new in news %}
+            <div class="news-child">
+              <!-- tagによって表示するクラスを変える -->
+              <div class="tagcss" >
+                <a  href="{% url 'Article_str' new.tag.all.0 1 %}">
+                  <p>
+                    {{ new.tag.all.0.text_return }}
+                    {% if new.tag.all.1 %}
+                      +
+                    {% endif %}
+                  </p>
+                </a>
+              </div>
+              <p>
+                <a class="new-a" href="{% url 'Article' new.id %}">{{ new.title }}</a>
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="three-icons">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="top-section top-section-last">
+        <div class="iconbox">
+          <img class="iconbox-img" src="{% static 'img/kucg/set_images/icon_guitar1.svg' %}">
+          <p class="iconbox-title">Activity</p>
+          <div class="iconbox-div color-box1" ><img src="{% static 'img/kucg/set_images/onpu1.svg' %}"></div>
+          <div class="iconbox-div color-box2" ><img src="{% static 'img/kucg/set_images/onpu2.svg' %}"></div>
+          <div class="iconbox-div color-box3" ><img src="{% static 'img/kucg/set_images/onpu3.svg' %}"></div>
+          <div class="iconbox-div color-box4" ><img src="{% static 'img/kucg/set_images/onpu4.svg' %}"></div>
+          <div class="iconbox-div color-box5" ><img src="{% static 'img/kucg/set_images/onpu1.svg' %}"></div>
+        </div>
+
+        <div class="slideshow">
+          <button id="slide-leftbtn"><</button> 
+          <div id="slide-image">
+            {% for n_img in news_img %}
+              <a href="{% url 'Article' n_img.id %}">
+                <img class="slide-one" src="{{ n_img.img.url }}">
+              </a> 
+            {% endfor %}
+            <div id="current-showing"> 
+              {% for n_img in news_img %}
+              <button></button>
+              {% endfor %}
+            </div>
+          </div>
+          <button id="slide-rightbtn"> > </button>
+        </div>
+        <div class="movie-box">
+          <div class="songname-box" >
+            <img src="{% static 'img/kucg/set_images/icon_movie.svg' %}" >
+            <p class="songname">SongName</p>
+            <p class="border-green"></p><p class="border-blue"></p><p class="border-pink"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block extra_js %}
+  <script>
+    let pc = document.getElementById('pc-none').setAttribute('style', 'display:none;')
+    var tagColors = JSON.parse('{{ tag_colors_json|safe}}')
+    var head = document.getElementById("top-pc")
+    var topimage = document.getElementsByClassName("topimage")[0]
+    var left_slide_btn = document.getElementById("slide-leftbtn")
+    var right_slide_btn = document.getElementById("slide-rightbtn")
+    var slide_images = document.getElementById("slide-image").getElementsByTagName("img")
+    var nowshowing = 0
+    var current_showing = document.getElementById("current-showing").getElementsByTagName("button")
+    var songname = document.getElementsByClassName("songname")[0]
+    var news = JSON.parse('{{news_img_title_enced|safe}}')
+    var cur_btn = document.getElementById("current-showing").getElementsByTagName("button")
+    var ball = document.getElementsByClassName("top-guitar")[0]
+    var field = document.getElementById("top-div")
+    var top_img1 = document.getElementsByClassName("top-img1")[0]
+    var top_img2 = document.getElementsByClassName("top-img2")[0]
+    var top_img3 = document.getElementsByClassName("top-img3")[0]
+
+    document.onscroll = function() {
+      var scrollTop =
+        document.documentElement.scrollTop || // IE、Firefox、Opera
+        document.body.scrollTop
+        if(scrollTop>10){
+            document.getElementsByClassName("iconbox")[0].classList.add("move")
+        }
+        let trigger1 = document.getElementById('introduction-img')
+        let trigger2 = document.getElementById('news-box')
+        let trigger1ClientRect = trigger1.getBoundingClientRect()
+        let trigger2ClientRect = trigger2.getBoundingClientRect()
+        let trigger1Top = trigger1ClientRect.top
+        let trigger2Top = trigger2ClientRect.top
+        if(trigger1Top<0){
+          document.getElementsByClassName("three-icons")[0].classList.add('is-show')
+        }
+        if(trigger2Top+20<0){
+          document.getElementsByClassName("three-icons")[1].classList.add('is-show')
+        }
+    }
+    window.onload = () => {
+      let tags = document.getElementsByClassName("tagcss")
+      for(let i = 0;i < tags.length ; i++){
+          tags[i].style.background = tagColors[i]
+      }
+      try {
+        songname.innerHTML = news[nowshowing]
+        current_showing[nowshowing].style.background = "#FFF"
+
+        for(let i = 0 ; i < cur_btn.length ; i ++){
+          cur_btn[i].addEventListener("click", function slide_move(){
+            current_showing[nowshowing].style.background =  "#ffffff8a"
+            songname.innerHTML = news[i]
+            current_showing[i].style.background =  "#fff"
+            for(let j = 0 ; j < slide_images.length ; j++){
+                slide_images[j].style.transform = `translateX(${ -i * 100 }%)`
+            }
+            nowshowing = i
+          },false)
+        }
+      }
+      catch (e) {
+
+      }
+      head.style.position="relative"
+      topimage.style.marginBottom = 0 + "px"
+      // バウンドのアニメーション
+      let height = []
+      let width = []
+      if (window.matchMedia('(max-width: 780px)').matches) {
+        height = [53,49,46]
+        width = 16
+      } else if (window.matchMedia('(max-width: 1200px)').matches) {
+          height = [47.5,41.4,36]
+          width = 20.5
+      } else if (window.matchMedia('(max-width: 1400px)').matches) {
+          height = [47.5,41.4,36]
+          width = 20.5
+      } else if (window.matchMedia('(max-width: 1600px)').matches) {
+          height = [47.5,41.7,36]
+          width = 20.5
+      } else if (window.matchMedia('(max-width: 1800px)').matches) {
+          //スマホ処理
+          height = [47.5,41.7,36]
+          width = 20.5
+      } else if (window.matchMedia('(min-width:780px)').matches) {
+          //PC処理
+          height = [47.5,41.4,36]
+          width = 20.5
+      }
+      for(let i = 0 ; i < 3 ; i++){
+        animate({
+          duration: 2000-(i-1)*400,
+          timing: makeEaseOut(bounce),
+          draw: function(progress) {
+            if(i == 0){
+              top_img3.style.top = height[i] * progress + '%'
+            } else if(i == 1){
+              top_img2.style.top = height[i] * progress + '%'
+            } else if(i == 2){
+              top_img1.style.top = height[i] * progress + '%'
+            }
+          }
+        })
+      }
+      var set = setInterval(function a(){
+        animate({
+          duration: 2500,
+          timing: makeEaseOut(quad),
+          draw: function(progress) {
+            ball.style.left = width * -progress + 100 +'%'
+          }
+        })
+        clearInterval(set)
+      }, 2300 )  
+    }
+    
+    window.onscroll = function() {
+      if(window.innerWidth > 780){
+        if (topimage.getBoundingClientRect().top < -topimage.clientHeight){
+          topimage.style.marginBottom = 60 + "px"
+          head.style.position="fixed"
+        } else {
+          head.style.position="relative"
+          topimage.style.marginBottom = 0 + "px"
+        }
+      } 
+    }
+    
+    right_slide_btn.onclick = function() {
+      current_showing[nowshowing].style.background =  "#ffffff8a"
+      if(nowshowing >= current_showing.length -1){
+        nowshowing = 0
+      } else {
+        nowshowing += 1
+      }
+      songname.innerHTML = news[nowshowing]
+      current_showing[nowshowing].style.background =  "#fff"
+      for(let i = 0 ; i < slide_images.length ; i++){
+        slide_images[i].style.transform = `translateX(${- nowshowing * 100 }%)`
+      }
+    }
+  
+    left_slide_btn.onclick = function() {
+    current_showing[nowshowing].style.background =  "#ffffff8a"
+    if(nowshowing == 0){
+      nowshowing = current_showing.length -1
+    } else{
+      nowshowing -= 1
+    }
+    songname.innerHTML = news[nowshowing]
+    current_showing[nowshowing].style.background =  "#fff";
+    for(let i = 0 ; i < slide_images.length ; i++){
+        slide_images[i].style.transform = `translateX(${- nowshowing * 100 }%)`
+      }
+    }
+
+    function makeEaseOut(timing) {
+      return function(timeFraction) {
+        return 1 - timing(1 - timeFraction)
+      }
+    }
+
+    function bounce(timeFraction) {
+      for (let a = 0, b = 1, result; 1; a += b, b /= 2) {
+        if (timeFraction >= (7 - 4 * a) / 11) {
+          return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2)
+        }
+      }
+    }
+
+    function quad(timeFraction) {
+      return Math.pow(timeFraction, 2)
+    }
+
+  </script>
+
+{% endblock %}

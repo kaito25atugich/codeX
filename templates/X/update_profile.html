@@ -1,0 +1,25 @@
+{% extends 'X/base.html' %}
+
+{% block title %} edit {% endblock %}
+{% block content %}
+  {% if messages %}
+    {% for m in messages %}
+      <div class="div-text section {{ m.tags }}-text">{{ m|safe }}</div>
+    {% endfor %}
+  {% endif %}
+
+<div class="div-text">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form{{ num }}" id="form{{ num }}">
+      <label for="form-{{ num }}">{{ form.label }}</label>
+      <div id="form-{{ num }}">
+        {{ form.as_p }}
+      </div>
+    </div>
+    <button class="sub-btn" type="submit">save </button>
+  </form>
+</div>
+
+
+{% endblock %}

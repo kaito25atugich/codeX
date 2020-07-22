@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>X {% block title %}{% endblock %}</title>
+    {% block additional_css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/convolution.min.css' %}">
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    <div class="heading">
+      {% block additional_head %}{% endblock %}
+    </div>
+    {% block additional_js %}{% endblock %}
+  </body>
+</html>

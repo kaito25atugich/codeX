@@ -1,0 +1,87 @@
+{% extends 'kucg/base.html' %}
+{% load static %}
+{% block content %}
+  <div class="activity-top">
+    <img src="{% static 'img/kucg/set_images/topimage2_full.svg' %}" class="pc">
+    <img src="{% static 'img/kucg/set_images/topimage2.svg' %}" class="smart">
+    <p>Activity</p>
+  </div>
+  <div class="container-ac">
+    {% if activityTitle %}
+      <p>{{ activityTitle }}</p>
+    {% elif archiveTitle %}
+      <p style="font-size:4vw;">{{ archiveTitle }}</p>
+    {% else %}
+      <p style="font-size:4vw;">{{ activityStrTitle }}</p>
+    {% endif %}
+    <div class="activities">
+      {% for arti in news %}
+        <div class="article" >
+          <a href="{% url 'Article' arti.id %}">
+            {% if arti.img %}
+              <img src="{{ arti.img.url }}">
+            {% else %}
+              <div class="instead-img" >
+                <p>Article</p>
+              </div>
+            {% endif %}
+            <div class="article-mid">
+              <div class="div-left ">
+                <p class="article-p">
+                  {{arti.tag.all.0}}
+                  {% if arti.tag.all.1 %}
+                    +
+                  {% endif %}
+                </p>
+              </div>
+              <div class="div-right">
+                {{arti.date}}
+              </div>
+            </div>
+            <div class="article-title">
+              {{arti.title}}
+            </div>
+          </a>
+        </div>
+      {% endfor %}         
+    </div>
+
+    <div class="loading-btn">
+      {% if page_count < 5 %}
+        {% with ''|center:page_count as range %}
+          {% for _ in range %}
+            {% if page != forloop.counter %}
+              {% if activityTitle %}
+                <a  href="{% url 'Activity' forloop.counter %}">{{ forloop.counter }}</a>
+              {% elif archiveTitle %}
+                <a  href="{% url 'Archive' year month forloop.counter %}">{{ forloop.counter }}</a>
+              {% else %}
+                <a  href="{% url 'Article_str' search_word  %}">{{ forloop.counter }}</a>
+              {% endif %}
+            {% else %}
+              <div class="btn-active">{{ forloop.counter }}</div>
+            {% endif %}
+          {% endfor %}
+        {% endwith %}
+      {% else %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    var tagColors = JSON.parse('{{ tagColorsJson|safe}}')
+    
+    window.onload = () => {
+      let tags = document.getElementsByClassName("div-left")
+      let back = document.getElementsByClassName("article")
+      for(let i = 0;i < tags.length ; i++){
+      tags[i].style.background = tagColors[i]
+      if(back[i].getElementsByClassName("instead-img")[0]){
+        back[i].getElementsByClassName("instead-img")[0].style.background = tagColors[i]
+      }
+      }
+    }  
+  </script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'X/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %} login {% endblock %}
+{% block content %}
+<div class="margin-top-more">
+  {% for field, errors in form.errors.items %}
+    <ul>
+      {% for error in errors %}
+        <li class="create-error">{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+  <form class="login-form" method="post">
+    {% csrf_token %}
+    <p>{{ form.username.label }}</p>
+    <p>{{ form.username|add_class:"text-form" }}</p>
+    <p>{{ form.password.label }}</p>
+    <p>{{ form.password|add_class:"pass-form" }}</p>
+    <button class="sub-btn login-page" type="submit">ログイン</button>
+    <div class="login-text">
+      <a href="{% url 'codeX:reset_password' %}">パスワードを忘れた方はこちらから</a>
+    </div>
+  </form>
+ 
+
+
+</div>
+{% endblock %}

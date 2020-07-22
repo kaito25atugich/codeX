@@ -1,0 +1,24 @@
+{% extends 'help/base.html' %}
+{% load static %}
+{% load hosts %}
+{% block content %}
+<header class="news-header">
+  <img class="news-header-logo" src="{% static 'img/codex_logo_2.svg' %}" alt="codeX">
+</header>
+<div class="news-wrapper">
+  <div class="news-block">
+    <div class="news-content-title">
+      {{ news.title }}
+    </div>
+    <div class="news-content-date">
+      {{ news.date.date }}
+    </div>
+    <div class="news-content">
+      {{ news.content|safe }}
+    </div>
+  </div>
+  <div class="top-link">
+    <a class="top-link" href="{% url 'top' %}">Top</a>
+  </div>
+</div> 
+{% endblock %}

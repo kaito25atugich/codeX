@@ -1,0 +1,213 @@
+{% extends 'help/base.html' %}
+{% load static %}
+{% load hosts %}
+{% load date_modify %}
+{% block extra_head %}
+  <script src='https://www.google.com/recaptcha/api.js?render=6LcTsOYUAAAAAGzCYikpdjBshbT4XMgUObS9xnb5'></script>
+  <script>
+    grecaptcha.ready(function() {
+      grecaptcha.execute('6LcTsOYUAAAAAGzCYikpdjBshbT4XMgUObS9xnb5', {action: 'homepage'})
+      .then(function(token) {
+        let form = document.getElementById("contactForm")
+        let input = document.createElement('input')
+        input.value = token
+        input.name = "g-recaptcha-response"
+        input.class = "center"
+        input.type = "hidden"
+        form.appendChild(input)
+      })
+    })
+  </script>
+{% endblock %}
+{% block content %}
+<div class="return-btn" id="ret-btn">
+  <img class="ret-btn-img" src="{% static 'img/top-btn.svg' %}" alt="TOPへ戻る">
+</div>
+<div class="hum" id="hum">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+<div class="top-header">
+  <div class="site-logo-zone">
+    <img class="site-logo" src="{% static 'img/codex_logo_2.svg' %}" alt="codeX title">
+    <div class="site-logo-text">
+      <a href="{% host_url 'codeX:top' host 'www' %}">codeXはこちら▶︎</a> 
+    </div>
+  </div>
+  <div>
+    <div class="top-text">
+      <img src="{% static 'img/help_moji.svg' %}" alt="サイトの更新　面倒じゃありませんか？">
+    </div>
+  </div>
+  <div class="nav" id="nav">
+    <div class="nav-box">
+      <div>
+        <a class="hum-nav" href="#news-cont">お知らせ</a> 
+      </div>
+      <div>
+        <a class="hum-nav" href="#outline">codeXとは？</a>
+      </div>
+      <div>
+        <a class="hum-nav" href="#usage">使用例</a>
+      </div>
+      <div>
+        <a class="hum-nav" href="#howtologin">ログインするには？</a>
+      </div>
+      <div>
+        <a class="hum-nav" href="#flow">ご利用までの流れ</a>
+      </div>
+      <div>
+        <a class="hum-nav" href="#fee">料金</a>
+      </div>
+      <div>
+        <a class="hum-nav" href="#contact">連絡先</a>
+      </div>
+    </div>
+  </div>
+  <div class="mq-nav" id="mq-nav">
+    <div class="mq-nav-box">
+      <div>
+        <a class="hum-nav" href="#news-cont" onclick="humNav()">お知らせ</a> 
+      </div>
+      <div>
+        <a class="hum-nav" href="#outline" onclick="humNav()">codeXとは？</a>
+      </div>
+      <div>
+        <a class="hum-nav" href="#usage" onclick="humNav()">使用例</a>
+      </div>
+      <div>
+        <a class="hum-nav" href="#howtologin" onclick="humNav()">ログインするには？</a>
+      </div>
+      <div>
+        <a class="hum-nav" href="#flow" onclick="humNav()">ご利用までの流れ</a>
+      </div>
+      <div>
+        <a class="hum-nav" href="#fee" onclick="humNav()">料金</a>
+      </div>
+      <div>
+        <a class="hum-nav" href="#contact" onclick="humNav()">連絡先</a>
+      </div>
+    </div>
+  </div>
+</div>
+<span id="trigger"></span>
+<div id="news-cont" class="section">
+  <div class="section-title">
+    お知らせ
+  </div>
+  <div class="top-news-wrapper">
+    <div class="news-box">
+      {% for n in news %}
+        {% if n.need_page %}
+          <div class="news-box-text">
+            <a href="{% url 'news' pk=n.id %}">
+              <span class="news-text-date">{{ n.date.date|add_zero }}</span><span class="news-text-title">{{ n.title }}</span>
+            </a>
+          </div>
+        {% else %}
+        <div class="news-box-text">
+          <span class="alter-a">
+            <span class="news-text-date">{{ n.date.date|add_zero }}</span><span class="news-text-title">{{ n.title }}</span>
+          </span>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<div id="outline" class="section">
+  <div class="section-title">
+    <img class="section-title-icon" src="{% static 'img/codex_logo_2.svg' %}" alt="codeX">とは？
+  </div>
+  <div class="section-text-content">
+    Webサイトの管理サイトです。いくつかの項目についてフォーム送信によって追加、削除、更新ができ、コンテンツを簡単に編集できます。頻繁に更新するお知らせやページを象徴する画像など幅広い項目について対応することが可能です。ちなみに、このページもcodeXを用いて管理を行なっております。
+  </div>
+</div>
+<div id="usage" class="section">
+  <div class="section-title">
+    使用例
+  </div>
+  <div class="usage-wrapper" id="usage-wrapper" data-counter=0>
+    {% for u in usages %}
+      {% if u.mov %}
+        <div class="usage" id="usage{{ forloop.counter }}">
+          <video muted controls>
+            <source src="{{ u.mov.url }}" type="video/mp4"> 
+          </video>
+          <div class="usage-title">{{ u.title }}</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+    <span id="right-arrow" class="right-arrow">▶︎</span>
+    <span id="left-arrow" class="left-arrow">◀︎</span>
+  </div>
+</div>
+<div id="howtologin" class="section">
+  <div class="section-title">
+    ログインするには?
+  </div>
+  <div class="section-text-content">
+    CodeXではサイトのご利用にあたり、ログインを行う必要があります。その際に必要とされるidとパスワードはcodeXの管理者であるconvolution宛に連絡をしていただき、こちらから設定したidと仮パスワードをお渡しする形でのみのご提供となっております。連絡先はこのページの下部にございます。
+  </div>
+</div>
+<div id="flow" class="section">
+  <div class="section-title">
+    ご利用までの流れ
+  </div>
+  <div class="section-text-content">
+    私どもはオーダメイドを重視した考えのもとサイト作成を行なっているため、1サイトごとに徹底した話し合いを通し、一つ一つデザインからコーディングまでを行なっております。下記にご利用までの簡単な流れを図示したものを掲載いたします。なお、すでにデザインが決まっているサイトにおきましても、決まっていないサイト同様に対応させていただきたいと考えております。その場合には下図のデザインの工程を省いた流れになります。
+  </div>
+  <div class="flow-wrapper">
+    <img class="flow" src="{% static 'img/codex_roadmaps.png' %}" alt="メールで依頼、デザイン決定、サイト完成、ユーザーデータ配布">
+  </div>
+</div>
+<div id="fee" class="section">
+  <div class="section-title">
+    料金
+  </div>
+  <div class="section-text-content">
+    現時点は料金は決定しておりませんが、初期費用と月額課金制による料金導入を検討しております。現在はcodeXそのもののパフォーマンスなども未知数ですのでテスト期間として6月いっぱいまで無料で対応させていただきます。
+  </div>
+</div>
+<div id="contact" class="section">
+  <div class="section-title">
+    連絡先
+  </div>
+  <div class="section-text-content">
+    連絡先は以下の通りです。フォームから送信していただけると幸いです。その他の連絡先についても同様に対応させていただきます。開発のご連絡、修正の依頼ご要望など受け付けております。
+  </div>
+  <div class="section-text-email">
+    Email: kutskhrk.convolution123@gmail.com
+  </div>
+  {% if messages %}
+    {% for m in messages %}
+      <div class="is-{{ m.tags }}">
+        {{ m }}
+      </div>
+    {% endfor %}
+  {% endif %}
+  <form method="POST" id='contactForm' class="contact-form" action="" name="contactForm">
+    {% csrf_token %}
+    {% for f in form %}
+      <label for="">{{ f.label }}</label>
+      {{ f }}
+    {% endfor %}
+    <p class="recaptcha_policy">
+      This site is protected by reCAPTCHA and the Google
+      <a href="https://policies.google.com/privacy" target="_blank">
+        Privacy Policy
+      </a> 
+      and 
+      <a href="https://policies.google.com/terms" target="_blank">
+        Terms of Service
+      </a>
+      apply.
+    </p>
+    <button class="submit-btn" type="submit">送信</button>
+  </form>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/help.js' %}"></script>
+{% endblock %}

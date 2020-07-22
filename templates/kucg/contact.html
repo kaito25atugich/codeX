@@ -1,0 +1,87 @@
+{% extends 'kucg/base.html' %}
+{% load static %}
+{% block content %}
+  <form id="myform" method="post">
+    {% csrf_token %}
+    <div class="contact">
+      <p class="title">お問い合わせ</p>
+      <div id="error-text"></div>
+      <p class="contact-p">お名前</p>
+      <input name="from_name">
+
+      <p class="contact-p2">メールアドレス</p>
+      <input style="top:18%;" name="mail_address">
+
+      <p class="contact-text">お問い合わせ内容</p>
+      <textarea name="message_html"></textarea>
+      {% if email %}
+        <button id="send-btn" type="button">送信</button>
+      {% else %}
+        <p class="alter-button">サイトのメールアドレスが設定されていないため送信できません。</p>
+      {% endif %}
+    </div>
+  </form>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/smtp.js'  %}"></script>
+  <script>
+    myform = document.getElementById("send-btn")
+
+    myform.onclick = (e) =>{
+      if (CheckForm()) {
+        Email.send({
+          SecureToken : "<your token here>",
+          To : '{{ email.email }}',
+          From : document.getElementsByName("mail_address")[0].value,
+          Subject : `KUCG:${document.getElementsByName("from_name")[0].value}様からお問い合わせです`,
+          Body : document.getElementsByName("message_html")[0].value,
+        }).then(
+          message => {
+            alert(message)
+            if(message == "OK"){
+              window.location.href="/"
+            }
+          },
+        )
+      } else {
+        e.preventDefault()
+      }
+    }
+    function CheckForm () {
+      var err = []
+      var regexp = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/
+      let f = document.forms['myform']
+      let from_name = f.from_name.value
+      let mail_address = f.mail_address.value
+      let message_html = f.message_html.value
+      if (from_name == '') {
+        err.push('お名前は必須です。')
+        f.from_name.required = 'required'
+      }
+      if (mail_address == '') {
+        err.push('メールアドレスは必須です。')
+        f.mail_address.required = 'required'
+      } else if (!regexp.test(mail_address)) {
+        err.push('正しいメールアドレスを入力してください。')
+        f.mail_address.required = 'required'
+      }
+      if (message_html == '') {
+        err.push('お問い合わせ内容は必須です')
+      }
+      console.log(err)
+      let len = Object.keys(err).length
+      if (len > 0) {
+        let tar = document.getElementById('error-text')
+        tar.classList.add('error-text')
+        for (let i=0;i<len;i++) {
+          elem = document.createElement('div')
+          elem.innerHTML=err[i]
+          tar.append(elem)
+        }
+        return false
+      }
+      return true
+    }
+  </script>
+{% endblock %}

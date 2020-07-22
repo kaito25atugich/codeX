@@ -1,0 +1,39 @@
+{% extends 'X/base.html' %}
+{% load static %}
+{% load hosts %}
+{% block additional_head %}
+{% if user.is_authenticated %}
+  <div class="head-text">ようこそ {{ request.user.username }}</div>
+{% endif %}
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+  <h1 class="head1-title">{{ request.user.username }}様の保有しているサイト一覧</h1>
+  {% for site in sites %}
+    <div class="site-box">
+      <div class="site-box-text">{{ site }}</div>
+      <div class="top-btn">
+        <a href="{% url 'codeX:edit' site.id %}">
+          新規作成
+        </a>
+        <a href="{% url 'codeX:update' site.id %}">
+          更新・削除
+        </a>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <img class="top-logo" src="{% static 'img/codex_logo_2.svg' %}" alt="Site Icon" />
+  <img class="top-message-im" src="{% static 'img/codex_top_text.svg' %}" alt="サイトの更新もっと簡単に"/>
+
+  <a class="case-not-login-nav" href="{% host_url 'top' host 'help' %}">codeXとは？<br>ログインするには？</a>
+
+  <a class="case-not-login" href="{% url 'codeX:login' %}">ログイン</a> 
+  
+  <div class="section top-text-not-login">
+    <a href="{% url 'codeX:reset_password' %}">パスワードを忘れた方はこちらから</a>
+  </div> 
+  
+  
+{% endif %}
+{% endblock %}

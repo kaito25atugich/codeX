@@ -1,0 +1,50 @@
+{% load static %}
+<html>
+  <head>
+    <meta name="google-site-verification" content="0mt6npzFn98fTLIVoiSAqzTDKUc11aqOoi5CimkXCNI" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@convolu59011759" />
+    <meta property="og:url" content="https://help.code-x.xyz/top/" />
+    <meta property="og:title" content="フォーム送信で簡単サイト更新 CodeX" />
+    <meta property="og:description" content="サイト更新アプリcodeXの説明サイトです。" />
+    <meta property="og:image" content="{% static 'img/codex_twitter.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/help.min.css' %}">
+    {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+    {% block content %}
+    {% endblock %}
+    <footer>
+      <div class="footer-site-logo-zone">
+        <div class="site-logo-text">
+          <a href="">codeXはこちら▶︎</a> 
+        </div>
+        <img class="site-logo" src="{% static 'img/codex_logo_2.svg' %}" alt="codeX title">
+      </div>
+      <div class="footer-nav">
+        <div>
+          <a href="{% url 'top' %}#news-cont">お知らせ</a> 
+        </div>
+        <div>
+          <a href="{% url 'top' %}#outline">codeXとは？</a>
+        </div>
+        <div>
+          <a href="{% url 'top' %}#usage">使用例</a>
+        </div>
+        <div>
+          <a href="{% url 'top' %}#howtologin">ログインするには？</a>
+        </div>
+        <div>
+          <a href="{% url 'top' %}#flow">ご利用までの流れ</a>
+        </div>
+        <div>
+          <a href="{% url 'top' %}#fee">料金</a>
+        </div>
+        <div>
+          <a href="{% url 'top' %}#contact">連絡先</a>
+        </div>
+      </div>
+    </footer>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

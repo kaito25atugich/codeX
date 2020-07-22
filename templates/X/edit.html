@@ -1,0 +1,37 @@
+{% extends 'X/base.html' %}
+
+{% block title %} edit {% endblock %}
+{% block content %}
+<div class="div-text">
+  現時点では個別送信のみの対応となっております。<span class="strong">送信したい項目のチェックボタンをクリックして</span>　送信してください。ご理解とご協力のほどお願いいたします。
+</div>
+<div>
+  {% if messages %}
+    {% for m in messages %}
+      <div class="section {{ m.tags }}-text">{{ m|safe }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% for k, form in forms.items %} 
+  <div class="section-title is-edit">{{ k }}</div>
+  <form class="edit-form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form{{ forloop.counter }}" id="form{{ forloop.counter }}">
+      <div id="form-{{ forloop.counter }}">
+        {% for f in form %}
+          <div class="edit-form-content">
+            <label class="edit-form-label" for="f">{{ f.label }}</label>
+            <div class="edit-form-text">{{ f.help_text }}</div>
+            <div>{{ f }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <button class="sub-btn" type="submit">save </button>
+  </form>
+{% empty %}
+  <p>the list is empty.</p>
+{% endfor %}
+  
+
+{% endblock %}

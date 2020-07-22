@@ -1,0 +1,49 @@
+{% extends 'X/base.html' %}
+{% load get_array %}
+
+{% block title %} update {% endblock %}
+{% block content %}
+
+<div class="margin-top">
+  {% if messages %}
+    {% for m in messages %}
+      <div class="div-text section {{ m.tags }}-text" style="text-align: center;">{{ m|safe }}</div>
+    {% endfor %}
+  {% endif %}
+  {% for key, item in items.items %}
+    <div class="section">
+      <h2 class="section-title">{{ key }}</h2>
+      <div class="update-box">
+        {% with name=model_name|get_array_value:forloop.counter0 %}
+          {% for i in item %}
+            <div class="update-content">
+              <div class="update-content-text">{{ i }} </div>
+              {% if i.can_update %}
+                <a class="upd-sub-btn" href="{% url 'codeX:update_page' site_id i.id name %}">更新</a>
+              {% endif %}
+                <a class="del-sub-btn" href="{% url 'codeX:delete' site_id i.id name %}" data-item="{{ i }}" onclick="DeleteItem(this, event)">削除</a>
+            </div>
+          {% endfor %}
+        {% endwith %}
+      </div>
+    </div>
+  {% empty %}
+    <p>
+      更新や削除できる項目が見つかりません。
+      お困りの際はは開発担当へご連絡くださいませ。
+    </p>
+  {% endfor %}
+</div>  
+
+{% endblock %}
+{% block additional_js %}
+<script>
+  function DeleteItem ($this, e) {
+    let data = $this.dataset.item
+    let ret = window.confirm(`${data}を削除してもよろしいですか？`)
+    if(!ret){ 
+      e.preventDefault()
+    }
+  }
+</script>
+{% endblock %}

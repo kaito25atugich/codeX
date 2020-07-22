@@ -1,0 +1,90 @@
+{% extends 'kucg/base.html' %}
+{% load static %}
+{% block content %}
+  <div class="container">
+    <div class="main">
+      <div class="article-top">
+        <div class="article-title">{{article.title}}</div>
+        <div class="article-date">{{article.date}}</div>
+      </div>
+      <div class="article-tag">
+        {% for art in article.tag.all %}
+           <a href="{% url 'Article_str' art 1 %}"><p> #{{ art }} </p></a>
+        {% endfor %}
+      </div>
+      {% if type_number == 1 %}
+        <div class="article-img">
+          <video playsinline muted controls>
+            <source src="{{ article.mov.url }}" type="video/mp4"></source>
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      {% elif type_number == 2 %}
+        <div class="article-img">
+          <video poster="{{ article.img.url }}" playsinline  controls>
+            <source src="{{ article.mov.url }}" type="video/mp4"></source>
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      {% elif type_number == 3 %}
+        <div class="article-img">
+          <img src="{{ article.img.url }}" >
+        </div>
+      {% endif %}
+      <div class="guitar-back">
+        <img  src="{% static 'img/kucg/set_images/icon_guitar.svg' %}" >
+      </div>
+      <div class="article-text">{{article.message|safe}}</div>
+      <form method="post">
+        {% csrf_token %}
+        <div class="comment-form" >
+          <p>Comment</p>
+          <div class="name">
+            <p>Name:</p>
+            <input type="text" name="nameform">
+          </div>
+          <div class="comment" >
+            <p>Comment:</p>
+            <textarea type="text" name="commentform"></textarea>
+          </div>
+          <button type="submit">送信</button>
+        </div>
+      </form>
+      {% for comment in comments %}
+        <div class="comment-list">
+          <div class="comment-list-child">
+            <p class="child-left">{{comment.name}} </p>
+            <p class="child-right">{{comment.date}}</p>
+          </div>
+          <div class="comment-text">{{comment.comment}}</div>
+        </div>
+      {% endfor %}
+      <div class="comment-bottom"></div>
+    </div>
+    <div class="sidemenu">
+      <div class="search">
+        <p>検索</p>
+        <form method="POST"  action="{% url 'Activity' 1 %}"  >
+          {% csrf_token %}
+          <input placeholder="キーワードを入力してください" type="text" name="search_input"> 
+        </form>
+      </div>
+      
+      <div class="side-news" >
+        <p>最近の投稿</p>
+        {% for some in news %}
+          <a  href="{% url 'Article' some.id %}">{{some.title}}</a>
+          <br>
+        {% endfor %}
+      </div>
+
+      <div class="archive">
+        <p>アーカイブ</p>
+        {% for some in archives %}
+          <a  href="{% url 'Archive' some.year some.month 1 %}">{{some.year}}年{{some.month}}月</a>
+          <br>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
