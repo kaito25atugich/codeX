@@ -1,0 +1,1006 @@
+@charset "UTF-8";
+
+
+// variables
+$breakpoint: 780px;
+$breakpoint-md: 1024px;
+$breakpoint-ippro-minw: 834px; //1024x1366 ipad pro 834x1112
+$breakpoint-ippro-minh: 1112px;
+$breakpoint-ippro-maxw: 1024px; 
+$breakpoint-ippro-maxh: 1336px;
+// color
+$head-clr: #303030;
+$login-btn-clr: #bb4040;
+$login-btn-hv-clr: #6e2525;
+$back-clr: #f6f7fb;
+
+// basic settings
+@mixin mq {
+  @media (max-width: $breakpoint)  {
+    @content;
+  }
+}
+@mixin mq-md {
+   @media (max-width: $breakpoint-md) {
+    @content;
+  }
+}
+@mixin mq-ipad-pro {
+  @media (max-width:$breakpoint-ippro-maxw) and (min-width:$breakpoint-ippro-minw - 1) and (min-height:$breakpoint-ippro-minh - 1) and (max-height: $breakpoint-ippro-maxh) {
+    @content;
+  }
+}
+html {
+  font-size: 62.5%;
+  font-family: 'M PLUS 1p', sans-serif;;
+}
+body {
+  position: relative;
+  background-color: #f6f7fb;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  @include mq-md {
+  font-size: 2.0rem;
+  }
+  @include mq {
+  font-size: 2.0rem;
+  }
+  
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+}
+h1 {
+  font-size: 2vw;
+  margin: 3rem 0;
+  &.head1-title {
+  margin-top: 10rem;
+  }
+  @include mq-md {
+  font-size: 3rem;
+  }
+  @include mq {
+  font-size: 2.2rem;
+  }
+  
+}
+p {
+  font-size: 1.4rem;
+  margin: 3rem 0;
+  &.with-p {
+    width: 50vw;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #8f8f8f;
+    
+    @include mq-md {
+      font-size:2.4rem;
+    }
+    @include mq {
+      font-size: 1.6rem;
+      width: 90vw;
+      word-wrap: break-word;
+    }
+  }
+}
+div {
+  &.margin-top-more {
+    margin-top: 10rem;
+  }
+}
+form {
+  > p {
+    @include mq-md {
+      font-size: 2.2rem;
+    }
+    @include mq {
+      font-size: 1.8rem;
+    }
+  }
+}
+label {
+  @include mq-md {
+    font-size: 2.2rem;
+  }
+  @include mq {
+    font-size: 1.6rem;
+  }
+}
+.div-text {
+  margin-top: 14vh;
+  margin-bottom: 10vh;
+  @include mq-md {
+    font-size: 2.0rem;
+  }
+  @include mq {
+    font-size: 1.8rem;
+  }
+}
+.wrapper{
+  margin: 60px 6vw 0 0;
+  @include mq-md {
+    margin-top: 240px;
+  }
+  @include mq {
+    margin: none;
+    margin-top: 180px;
+  }
+}
+.container {
+  margin: 14vh 5vw 10vh;
+  @include mq-md {
+    margin: none;
+  }
+}
+.heading {
+  position: fixed;
+  top: 0;
+  background-color: rgba($color: $head-clr, $alpha: 1.0);
+  width: 100vw;
+  height: 60px;
+  div{
+    color: #fff;
+  }
+  .head-text {
+    position: absolute;
+    top: 25px;
+    right: 80px;
+    font-size: 1.3rem;
+  }
+  @include mq-md {
+    height: 180px;
+    .head-text {
+      display: none;
+    }
+  }
+  @include mq {
+    height: 120px;
+    .head-text {
+      display: none;
+    }
+  }
+}
+.side-wrapper {
+  z-index: 10;
+}
+$side-bar-width: 100%;
+$side-bar-height: 100%;
+
+@mixin jinwari($from, $to, $from2, $to2, $from3, $to3){
+  from {
+    opacity: $from;
+    width: $from2;
+    height: $from3;
+  }
+  to {
+    opacity: $to;
+    width: $to2;
+    height: $to3;
+  }
+}
+@keyframes jinwari_in{
+  @include jinwari(0, 1, 0, $side-bar-width, 0, $side-bar-height);
+}
+@keyframes jinwari_out {
+  @include jinwari(1, 0, $side-bar-width, 0, $side-bar-height, 0);
+}
+@mixin fade-in($duration){
+  animation-name: jinwari_in;
+  animation-duration: $duration;
+}
+@mixin fade-out($duration){
+  animation-name: jinwari_out;
+  animation-duration: $duration;
+}
+.side-bar {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  background-color: rgba($color: $head-clr, $alpha: 1.0);
+  width: 80px;
+  height: 100vh;
+  @include mq-md {
+    @include fade-in(0.5s);
+    position: fixed;
+    top: 180px;
+    bottom: 0;
+    right: 0;
+    width: $side-bar-width;
+    height: $side-bar-height ;
+    transition: all 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  @include mq {
+    @include fade-in(0.5s);
+    position: fixed;
+    top: 120px;
+    bottom: 0;
+    right: 0;
+    width: $side-bar-width;
+    height: $side-bar-height;
+    transition: all 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+}
+.display {
+  @include mq-md {
+    visibility: hidden;
+    transition: all 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    @include fade-out(0.5s)
+  }
+  @include mq {
+    visibility: hidden;
+    transition: all 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    @include fade-out(0.5s)
+  }
+}
+.logo {
+  width: 150px;
+  height: 60px;
+  @include mq-md {
+    width: 350px;
+    height: 180px; 
+  }
+  @include mq {
+    width: 225px;
+    height: 120px;
+  }
+}
+///////////////////////////          side-bar           /////////////////////////
+
+$side-text-size: 60px;
+.side-text {
+  width: $side-text-size;
+  height: $side-text-size;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  border: 1px solid $head-clr;
+  border-radius: 50%;
+  background-color: rgba($color: $head-clr, $alpha: 1.0);
+  transition: all 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  font-family: 'M PLUS 1p', sans-serif;;
+  a {
+    display:flex;
+    justify-content: center;
+    line-height: $side-text-size;
+    color: #fff;
+    transition: all 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    &:hover {
+      color: rgba($color: $head-clr, $alpha: 1.0);
+    }
+    @include mq-md {
+      font-size: 5rem;
+      &:hover {
+        color: #fff;
+      } 
+    }
+    @include mq {
+      font-size: 2rem;
+      &:hover {
+        color: #fff;
+      } 
+    }
+  }
+  &:hover {
+    background-color: rgba($color: #fff, $alpha: 1.0);
+  }
+  &:nth-child(1) {
+    margin-top: 2rem;
+    @include mq-md {
+      margin-top: 12rem;
+    }
+  }
+  &:nth-child(2) {
+    margin-top: 2rem;
+  }
+  @include mq-md {
+    margin-bottom: 10vh;
+    &:hover {
+      background-color: transparent;
+    } 
+  }
+  @include mq {
+    margin-bottom: 6vh;
+    &:hover {
+      background-color: transparent;
+    } 
+  }
+}
+.nav {
+  display: none;
+  z-index: 15;
+  @mixin mq-hum {
+    .hum {
+      position: fixed;
+      top: 11vh;
+      right: 0vw;
+      transform: translate(-50%);
+      width: 50px;
+      height: 60px;
+      cursor: pointer;
+        color: #fff;
+      div {
+        position: relative;
+      }
+      span {
+        display:block;
+        position:absolute;
+        width:100%;
+        border-bottom:solid 3px #fff;
+        border-radius: 0.2rem;
+        transition: .35s ease-in-out;
+        &:nth-child(1) {
+          top: 15px;
+          }
+          &:nth-child(2) {
+          top: 0;
+          }
+          &:nth-child(3) {
+          top: -15px;
+          }
+        }
+      }
+    }
+    @include mq-md {
+      display: inline-block;
+    @include mq-hum();
+      .hum {
+        top: 80px;
+        right: 1vh;
+        width: 105px;
+        span {
+          border-bottom:solid 7px #fff;
+          border-radius: 1rem;
+          &:nth-child(1) {
+            top: 35px;
+          }
+          &:nth-child(2) {
+            top: 0;
+          }
+          &:nth-child(3) {
+            top: -35px;
+          }
+        } 
+      }
+    }
+    @include mq {
+      display: inline-block;
+      @include mq-hum();
+      .hum {
+        top: 60px;
+      }
+  }   
+  &.open .hum span {
+    @mixin mq-open {
+      &:nth-child(1) {
+        top: 0;
+        transform:rotate(-45deg)
+      }
+      &:nth-child(2),
+      &:nth-child(3) {
+        top: 0;
+        transform:rotate(45deg);
+      }
+    }
+    @include mq-md {
+      @include mq-open();
+    }
+    @include mq {
+      @include mq-open();
+    }
+  }
+}
+///////////////////////////          top-page           /////////////////////////
+
+.case-not-login {
+  font-size: 2vw;
+  position: absolute;
+  top: 50vh;
+  right: 18vw;
+  width: 25vw;
+  height: 6vw;
+  padding-top: 3vh;
+  border: 1px solid $login-btn-clr;
+  border-radius: 5px;
+  text-align: center;
+  background-color: rgba($color: $login-btn-clr, $alpha: 1.0);
+  color: #fff;
+  &:hover {
+    background-color: rgba($color: $login-btn-hv-clr, $alpha: 1.0);
+  }
+  @include mq-md {
+    font-size: 5vw;
+    right: 7vw;
+    width: 85vw;
+    height: 12vh;
+    padding-top: 4vh;
+    top: 110vh;
+    margin: 0 auto;
+  }
+  @include mq {
+    font-size: 5vw;
+    top: 80vh;
+    right: 7vw;
+    width: 85vw;
+    height: 9vh;
+    padding-top: 3vh;
+    margin: 0 auto;
+  }
+}
+.case-not-login-nav {
+  font-size: 2vw;
+  position: absolute;
+  top: 50vh;
+  left: 12.5vw;
+  width: 25vw;
+  height: 12vw;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  border: 1px solid $login-btn-clr;
+  border-radius: 5px;
+  text-align: center;
+  background-color: rgba($color: $login-btn-clr, $alpha: 1.0);
+  color: #fff;
+  line-height: 4vw;
+  &:hover {
+    background-color: rgba($color: $login-btn-hv-clr, $alpha: 1.0);
+  }
+  @include mq-md {
+    font-size: 5vw;
+    left: 8vw;
+    width:85vw;
+    height: 20vh;
+    top: 130vh;
+    line-height: 6vh;
+    margin-bottom: 30vh;
+  }
+  @include mq {
+    font-size: 5vw;
+    left: 8vw;
+    width: 85vw;
+    height: 20vh;
+    top: 90vh;
+    line-height: 6vh;
+    margin-bottom: 30vh;
+  }
+}
+.top-text-not-login {
+  position: absolute;
+  font-size: 2vh;
+  width: 25vw;
+  top: 60vh;
+  right: 15vw;
+  @include mq-md {
+    font-size: 3vh;
+    width: 80vw;
+    top: 165vh;
+    right: 0;
+    left: 5vh;
+    padding-bottom: 30vh;
+  }
+  @include mq {
+    font-size: 3vh;
+    width: 90vw;
+    top: 115vh;
+    right: 0;
+    left: 5vh;
+    padding-bottom: 30vh;
+  }
+}
+.top-logo {
+  position: absolute;
+  top: 15vh;
+  left: 0;
+  width: 50vw;
+  height: 20vh;
+  @include mq-md {
+    top: 12vh;
+    left: 10vw;
+    width: 80vw;
+    height: 30vh;
+  }
+  @include mq {
+    top: 5vh;
+    left: 10vw;
+    width: 80vw;
+    height: 30vh;
+  }
+}
+.top-message-im {
+  position: absolute;
+  top: 12vh;
+  right: 12.5vw;
+  width: 38vw;
+  height: 30vh;
+  @include mq-md {
+    top: 60vh;
+    right: 10vw;
+    width: 80vw;
+    height: 30vh;
+  }
+  @include mq {
+    top: 40vh;
+    right: 10vw;
+    width: 80vw;
+    height: 30vh;
+  }
+}
+.top-message {
+  font-size: 7rem;
+  position: absolute;
+  top: 30%;
+  right: 5%;
+  width: 40%;
+}
+.site-box {
+  position: relative;
+  width: 50vw;
+  height: 20vh;
+  border: 1px solid $back-clr;
+  background-color: #fff;
+  .site-box-text {
+    font-size: 1.6rem;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    text-align: center;
+    transform: translate(0, -100%);
+  }
+  @include mq-md {
+    width: 90vw;
+    height: 20vh;
+    .site-box-text {
+      font-size: 2.5rem;
+    }
+  }
+  @include mq {
+    width: 90vw;
+    height: 30vh;
+  }
+}
+.top-btn {
+  position: relative;
+  margin-bottom: 10px;
+  text-align: center;
+  a {
+    position: absolute;
+    right: 20px;
+    bottom: -18vh;
+    width: 120px;
+    height: 30px;
+    padding: 6px;
+    color: #fff;
+    border: 1px solid $login-btn-clr;
+    border-radius: 5px;
+    background-color: rgba($color: $login-btn-clr, $alpha: 1.0);
+    &:nth-child(1) {
+      right: 150px;
+    }
+    &:hover {
+      background-color: rgba($color: $login-btn-hv-clr, $alpha: 1.0);
+    }
+    @include mq-md {
+      width: 160px;
+      height: 50px;
+      padding: 15px;
+      &:nth-child(1) {
+        right: 190px;
+      }
+    }
+    @include mq {
+      width: 120px;
+      height: 50px;
+      bottom: -28vh;
+      &:nth-child(1) {
+        right: 150px;
+      }
+    }
+  }
+}
+
+///////////////////////////          login           /////////////////////////
+.create-error {
+  color: rgba(255, 60, 0, 0.877);
+}
+.login-form {
+  margin: 25vh 27vw 10vh;
+  @include mq-md {
+    margin: 0;
+  }
+}
+.login-text {
+  margin-top: 5vh;
+  text-align: center;
+}
+///////////////////////////          edit            /////////////////////////
+.edit-form {
+  margin: 12vh auto;
+}
+.edit-form-label {
+  font-size: 1.8rem;
+}
+.edit-form-text {
+  font-size: 1.6rem;
+  margin: 3vh 0;
+}
+.edit-form-content {
+  margin-bottom: 3vh;
+}
+input[type="text"] {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  &:before {
+    content: "\A" ;
+    white-space: pre ;
+  }
+}
+input[type="checkbox"] {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  z-index: 0;
+  &:before {
+    content: "\A" ;
+    white-space: pre ;
+  }
+}
+input[type="file"] {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+input[type="password"] {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+input[type="submit"] {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+input[type="email"] {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+input[type="number"] {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+textarea {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+textarea {
+  width: 30vw;
+  height: 150px;
+  margin-bottom: 2vh;
+  border: 1px solid #dcdcdc;
+  background-color: #fff;
+  vertical-align: top;
+  &:before {
+    content: "\A" ;
+    white-space: pre ;
+  }
+  @include mq-md {
+    width: 90vw;
+    height: 400px;
+    font-size: 2.2rem;
+  }
+  @include mq {
+    width: 90vw;
+    height: 200px;
+    font-size: 1.8rem;
+  }
+}
+@mixin form-style-box {
+  width: 90vw;
+  height: 100px;
+  font-size: 3rem;
+}
+@mixin form-style-for-res {
+  @include mq-md {
+    @include form-style-box();
+  }
+  @include mq {
+    @include form-style-box();
+    font-size: 2.2rem;
+    height: 60px;
+  }
+}
+
+input[type="text"].text-form {
+  width: 30vw;
+  height: 30px;
+  margin-bottom: 2vh;
+  border: 1px solid #dcdcdc;
+  background-color: #fff;
+  vertical-align: baseline;
+  &:before {
+    content: "\A" ;
+    white-space: pre ;
+  }
+  @include form-style-for-res();
+}
+input[type="password"].pass-form {
+  width: 30vw;
+  height: 30px;
+  border: 1px solid #dcdcdc;
+  background: #fff;
+  @include form-style-for-res();
+  &:before {
+    content: "\A" ;
+    white-space: pre ;
+  }
+}
+input[type="email"] {
+  font-size: 1.4rem;
+  width: 30vw;
+  height: 30px;
+  margin-bottom: 2vh;
+  border: 1px solid #dcdcdc;
+  background-color: #fff;
+  vertical-align: baseline;
+  &:before {
+    content: "\A" ;
+    white-space: pre ;
+  }
+  @include form-style-for-res();
+}
+input[type="number"] {
+  width: 30vw;
+  height: 30px;
+  margin-bottom: 2vh;
+  border: 1px solid #dcdcdc;
+  background-color: #fff;
+  vertical-align: baseline;
+  &:before {
+    content: "\A" ;
+    white-space: pre ;
+  }
+  @include form-style-for-res();
+}
+.file-form {
+  vertical-align: middle;
+  margin-bottom: 2vh;
+  border: 1px solid #dcdcdc ;
+  background-color: #fff;
+  &:before {
+    content: "\A" ;
+    white-space: pre ;
+  }
+  @include form-style-for-res();
+}
+.strong {
+  font-weight: bold;
+  font-size: 2.2rem;
+  color: #bb4040;
+  @include mq-md {
+    font-size: 2.2rem;
+  }
+  @include mq {
+    font-size: 2.2rem;
+  }
+}
+$green: #009688;
+$check-box-size: 20px;
+input[type="checkbox"]{
+  width: $check-box-size;
+  height: $check-box-size;
+  margin-bottom: 7vh;
+  border: 1px solid #dcdcdc ;
+  background-color: #fff;
+  position: relative;
+  margin: 0 1rem 0 0 ;
+  cursor: pointer;
+  &:before {
+    transition: all .2s ease-in-out;
+    content: "";
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    width: $check-box-size;
+    height: $check-box-size;
+    border: 2px solid #f2f2f2; 
+  }
+  &:checked {
+    &:before {
+      top: 0.5rem;
+      transform: rotate(-45deg);
+      height: .5rem;
+      border-color: $green;
+      border-top-style: none;
+      border-right-style: none;
+    } 
+  } 
+  &:after {
+    content: "";
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    width: $check-box-size;
+    height: $check-box-size;
+    cursor: pointer;
+  }
+}
+.sub-btn {
+  font-size: 1.4rem;
+  width: 120px;
+  height: 30px;
+  padding: 6px;
+  margin: 5vh auto;
+  margin-bottom: 5vh;
+  color: #fff;
+  border: 1px solid $login-btn-clr;
+  border-radius: 5px;
+  background-color: rgba($color: $login-btn-clr, $alpha: 1.0);
+  &:hover {
+    background-color: rgba($color: $login-btn-hv-clr, $alpha: 1.0);
+  }
+  &.login-page {
+    margin: 5vh 10.5vw;
+    height: 50px;
+    @include mq-md {
+      height: 10vh;
+      margin: 5vh auto;
+      margin-bottom: 5vh;
+    }
+    @include mq {
+      height: 10vh;
+      margin: 5vh auto;
+      margin-bottom: 5vh;
+    }
+  }
+  @mixin sub-btn {
+    font-size: 3.5rem;
+    width: 90vw;
+    height: 10vh;
+    margin-top: 5vh;
+  }
+  @include mq-md {
+    @include sub-btn();
+  }
+  @include mq { 
+    @include sub-btn();
+    font-size: 2.2rem;
+  }
+}
+@mixin message-text {
+  font-size: 2vw;
+  @include mq-md {
+    font-size:5vw;
+  }
+  @include mq {
+    font-size:5vw;
+  }
+}
+.error-text {
+  @include message-text();
+  color: #bb4040;
+}
+.success-text {
+  @include message-text();
+  color: #009688;
+}
+///////////////////////////          update           /////////////////////////
+.section {
+  margin: 3rem 0;
+}
+.section-title {
+  display: flex;
+  font-size: 2.6rem;
+  font-weight: bold;
+  margin-bottom: 5vh;
+  justify-content: center;
+  &.is-edit {
+    justify-content: left;
+  }
+  @include mq-md {
+    font-size: 3.6rem;
+  }
+  @include mq {
+    font-size: 2.8rem;
+  }
+}
+.margin-top {
+  margin-top: 20vh;
+}
+.update-box {
+  width: 70vw;
+  height: 30vh;
+  margin: 0 auto;
+  padding: 1rem 0.5rem;
+  border: 1px solid #838383;
+  font-size: 1.4rem;
+  text-align: left;
+  overflow: scroll;
+  @include mq-md {
+    width: 90vw;
+    height: 40vh;
+  }
+  @include mq {
+    width: 90vw;
+    height: 40vh;
+  }
+}
+.update-content {
+  position: relative;
+  width: 100%;
+  padding: 2rem 0.5rem;
+  border-bottom: 1px solid #838383;
+}
+.upd-sub-btn {
+  position: absolute;
+  top: 2rem;
+  right: 10vw;
+  width: 60px;
+  height: 20px;
+  padding: 3px;
+  color: #fff;
+  border: 1px solid $login-btn-clr;
+  border-radius: 5px;
+  background-color: rgba($color: $login-btn-clr, $alpha: 1.0);
+  &:hover {
+    background-color: rgba($color: $login-btn-hv-clr, $alpha: 1.0);
+  }
+  @include mq-md {
+    right: 13vw;
+    height: 30px;
+  }
+  @include mq {
+    right: 22vw;;
+    height: 30px;
+  }
+}
+.del-sub-btn {
+  position: absolute;
+  top: 2rem;
+  right: 3vw;
+  width: 60px;
+  height: 20px;
+  padding: 3px;
+  color: #fff;
+  border: 1px solid $login-btn-clr;
+  border-radius: 5px;
+  background-color: rgba($color: $login-btn-clr, $alpha: 1.0);
+  &:hover {
+    background-color: rgba($color: $login-btn-hv-clr, $alpha: 1.0);
+  }
+  @include mq-md {
+    height: 30px;
+  }
+  @include mq {
+    height: 30px;
+  }
+}
+.update-content-text {
+  width: 45vw;
+  overflow: scroll;
+  @include mq-md {
+    width: 70vw;
+  }
+  @include mq {
+    width: 40vw;
+  }
+}
+

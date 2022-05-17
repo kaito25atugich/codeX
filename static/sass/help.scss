@@ -1,0 +1,738 @@
+@charset "UTF-8";
+// variables
+$breakpoint: 890px;
+$breakpoint-md: 1100px;
+
+$theme-blue: #4F639A;
+$theme-hblue: rgb(47, 58, 90);
+// basical settings
+
+@mixin mq {
+  @media (max-width: $breakpoint)  {
+    @content;
+  }
+}
+@mixin mq-md {
+   @media (max-width: $breakpoint-md){
+    @content;
+  }
+}
+html {
+  font-size: 62.5%;
+  font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", "メイリオ", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+  font-weight: 500;
+}
+body {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  background-color: #f6f7fb;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+}
+h1 {
+  font-size: 2vw;
+  margin: 5px 0;
+  @include mq-md {
+    font-size: 5vh;
+  }
+  @include mq {
+    font-size: 5vh;
+  }
+}
+.top-header {
+  width: 100%;
+  height: 80vh;
+  margin-top: 0;
+  padding-top: 10vh;
+  background-image: url('../img/help_top.png');
+}
+.site-logo {
+  width: 15vw;
+  height: 10vh;
+  margin-top: 6vh;
+  margin-left: 5vw;
+  @include mq-md {
+    width: 60vw;
+    height: 30vh;
+    margin: 0 20vw;
+  }
+  @include mq {
+    width: 60vw;
+    height: 30vh;
+    margin: 0 20vw;
+  }
+}
+.footer-site-logo-zone {
+  margin-left: 36vw;
+  @include mq-md {
+    margin-left: 0vw;
+  }
+  @include mq {
+    margin-left: 0vw;
+  }
+}
+.return-btn {
+  position: fixed;
+  right: 0;
+  bottom: -20vh;
+  z-index: 15;
+  cursor: pointer;
+  transition: 0.5s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  .ret-btn-img {
+    width: 15vw;
+    height: 15vh;
+  }
+  &:hover {
+    opacity: 0.6;
+  }
+  @include mq-md {
+    right: 3vw;
+    &:hover {
+      opacity: none;
+    }
+  }
+  @include mq {
+    right: 3vw;
+    &:hover {
+      opacity: none;
+    }
+  }
+}
+.site-logo-text {
+  font-size: 1vw;
+  color: #fff;
+  margin-left: 8vw;
+  a {
+    color: #fff;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  @include mq-md {
+    font-size: 5vw;
+    margin: 0 0 0 30vw;
+    a {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+  @include mq {
+    font-size: 5vw;
+    margin: 0 0 0 30vw;
+    a {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
+.top-text {
+  position: absolute;
+  top: 25vh;
+  right: 5vw;
+  img {
+    width: 40vw;
+    height: 30vh;
+  }
+  @mixin top-text {
+    position: static;
+    margin: 0 15vw;
+    img {
+      width: 80vw;
+      height: 40vh;
+    }
+  }
+  @include mq-md {
+    @include top-text();
+  }
+  @include mq {
+    @include top-text();
+  }
+}
+.nav {
+  position: absolute;
+  margin: 0 auto;
+  width: 100vw;
+  top: 70vh;
+  right: 0;
+  .nav-box {
+    display: flex;
+    justify-content: center;
+  }
+  a {
+    font-size: 1.4vw;
+    display: flex;
+    margin: 0 27px;
+    color: #fff;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  @include mq-md {
+    display: none;
+  }
+  @include mq {
+    display: none;
+  }
+}
+.mq-nav {
+  display: none;
+  @mixin nav {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: -100vw;
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: #fff;
+    opacity: 0.9;
+    transition: all 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    .mq-nav-box {
+      display: block;
+      position: absolute;
+      top: 13vh;
+      left: 12.5vw;
+    }
+    a {
+      position: relative;
+      font-size: 8vw;
+      line-height: 10vh;
+      text-align: center;
+      color: #424242;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+  @include mq-md {
+    @include nav();
+  }
+  @include mq {
+    @include nav();
+  }
+}
+@mixin hum {
+  display: block;
+  position: fixed;
+  top: 6vh;
+  right: 0;
+  transform: translate(-50%);
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  color: #fff;
+  z-index: 2;
+  span {
+    display: block;
+    position: absolute;
+    width: 100%;
+    border-bottom:　solid 5px #fff;
+    border-radius: 0.2rem;
+    transition: .35s ease-in-out;
+    &:nth-child(1) {
+      top: 25px;
+    }
+    &:nth-child(2) {
+      top: 0;
+    }
+    &:nth-child(3) {
+      top: -25px;
+    }
+  }
+  &.open span {
+    border-bottom:solid 5px #444;
+    &:nth-child(1) {
+        top: 0;
+        transform:rotate(-45deg)
+    }
+    &:nth-child(2),
+    &:nth-child(3) {
+        top: 0;
+        transform:rotate(45deg);
+    }
+  }
+}
+.hum {
+  display: none;
+  @include mq-md {
+    @include hum();
+  }
+  @include mq {
+   @include hum();
+  }
+}
+.footer-nav {
+  display: flex;
+  margin: 10vw auto;
+  justify-content: center;
+  a {
+    font-size: 1.4vw;
+    color: #fff;
+    margin: 0 27px;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  @include mq-md {
+    display: none;
+  }
+  @include mq {
+    display: none;
+  }
+}
+.section {
+  margin: 40vh auto;
+  @include mq-md {
+    margin-bottom: 60vh;
+  }
+  @include mq-md {
+    margin-bottom: 60vh;
+  }
+}
+.section-title {
+  font-size: 4vw;
+  font-weight: 500;
+  text-align: center;
+  color: #424242;
+  margin-bottom: 5vw;
+  @mixin section-title {
+    font-size: 10vw;
+    margin-bottom: 10vw;
+  }
+  @include mq-md {
+    @include section-title();
+  }
+  @include mq {
+    @include section-title();
+  }
+}
+.section-title-icon {
+  width: 20vw;
+  height: 10vw;
+  vertical-align: bottom;
+  @mixin section-title-icon {
+    width: 35vw;
+    height: 20vw;
+  }
+  @include mq-md {
+    @include section-title-icon();
+  }
+  @include mq {
+    @include section-title-icon();
+  }
+}
+.top-news-wrapper {
+  margin: 0 auto;
+}
+.news-box {
+  width: 60vw;
+  height: 30vw;
+  margin: 0 auto;
+  padding: 3vh auto;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  overflow: scroll;
+  @mixin news-box {
+    width: 100vw;
+    height: 60vw;
+    margin: 0;
+  }
+  @include mq-md {
+    @include news-box();
+  }
+  @include mq {
+    @include news-box();
+  }
+}
+.news-box-text {
+  margin: 4vw 0;
+  a {
+    font-size: 1.5vw;
+    color: #000;;
+    padding: 3vw;
+    &:hover {
+      color: #5373b8;
+      text-decoration: underline;
+    }
+  }
+  @mixin news-box-text {
+    a {
+      font-size: 3.5vw;
+      color: #3688be;
+      &:hover {
+        text-decoration: none;
+        color: #3688be;
+      }
+    }
+  }
+  @include mq-md {
+    @include news-box-text();
+  }
+  @include mq {
+    @include news-box-text();
+  }
+}
+.alter-a {
+  font-size: 1.5vw;
+  color: #000;;
+  padding: 3vw;
+  @include mq-md {
+    font-size: 3.5vw;
+  }
+  @include mq {
+    font-size: 3.5vw;
+  }
+}
+.news-text-date {
+  text-align: left;
+}
+.news-text-title {
+  margin-left: 5vw;
+}
+.section-text-content {
+  font-size: 1.5vw;
+  width: 80vw;
+  margin: auto;
+  @include mq-md {
+    font-size: 4vw;
+  }
+  @include mq {
+    font-size: 4vw;
+  }
+}
+.section-text-email {
+  font-size: 1.5vw;
+  width: 60vw;
+  margin: 5vw auto;
+  text-align: center;
+  @include mq-md {
+    font-size: 4vw;
+    width: 100vw;
+  }
+  @include mq {
+    font-size: 4vw;
+    width: 100vw;
+  }
+}
+.usage-wrapper {
+  position: relative;
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+}
+.usage {
+  display: none;
+  video {
+    width: 60vw;
+    height: 30vw;
+  }
+  @include mq-md {
+    video {
+      width: 80vw;
+      height: 50vw;
+    }
+  }
+  @include mq {
+    video {
+      width: 80vw;
+      height: 50vw;
+    }
+  }
+}
+.usage-title {
+  font-size: 2.2rem;
+  text-align: center;
+}
+@mixin arrow {
+  font-size: 4vw;
+  display: block;
+  position: absolute;
+  top: 10vw;
+  cursor: pointer;
+  &:hover {
+    color: #dcdcdc;
+  }
+  @include mq-md {
+    font-size: 10vw;
+    top: 18vw;
+    &:hover {
+      color: #000;
+    }
+  }
+  @include mq {
+    font-size: 10vw;
+    top: 18vw;
+    &:hover {
+      color: #000;
+    }
+  }
+}
+.right-arrow {
+  @include arrow();
+  right: 10vw;
+  @include mq-md {
+    right: 0;
+  }
+  @include mq {
+    right: 0;
+  }
+}
+.left-arrow {
+  @include arrow();
+  left: 10vw;
+  @include mq-md {
+    left: 0;
+  }
+  @include mq {
+    left: 0;
+  }
+}
+.flow-wrapper {
+  margin: 5vw 13vw;
+}
+.flow {
+  width: 70vw;
+  height: 30vw;
+}
+footer {
+  width: 100vw;
+  height: 40vw;
+  padding: 5vw 0;
+  background-color: $theme-blue;
+  @include mq-md {
+    height: 50vh;
+  }
+  @include mq {
+    height: 50vh;
+  }
+}
+.contact-form {
+  width: 50vw;
+  margin: 0 auto;
+  padding: 2vw 3vw;
+  @include mq-md {
+    width: 100vw;
+  }
+  @include mq {
+    width: 100vw;
+  }
+}
+input[type="text"] {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  &:before {
+      content: "\A" ;
+      white-space: pre ;
+  }
+}
+textarea {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  &:before {
+      content: "\A" ;
+      white-space: pre ;
+  }
+}
+input[type="email"] {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+input[type="submit"] {
+  appearance: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+@mixin form-style {
+  font-size: 2.2rem;
+  width: 45vw;
+  height: 4vw;
+  margin-bottom: 2vh;
+  border: 1px solid #dcdcdc;
+  background-color: #fff;
+  vertical-align: baseline;
+  &:before {
+      content: "\A" ;
+      white-space: pre ;
+  }
+  @include mq-md {
+    font-size: 3vw;
+    width: 95vw;
+    height: 10vw;
+    padding: 2vw;
+    margin-bottom: 5vh;
+    border-radius: 2rem;
+  }
+  @include mq {
+    font-size: 3vw;
+    width: 95vw;
+    height: 10vw;
+    padding: 2vw;
+    margin-bottom: 5vh;
+    border-radius: 2rem;
+  }
+}
+input[type="text"].text-form {
+  @include form-style();
+}
+input[type="email"].email-form {
+  @include form-style();
+}
+.textarea-form {
+  @include form-style();
+  height: 20vw;
+  vertical-align: top;
+  @include mq-md {
+    height: 50vw;
+  }
+  @include mq {
+    height: 50vw;
+  }
+}
+label {
+  font-size: 1.4vw;
+  text-align: center;
+  @include mq-md {
+    font-size: 4vw;
+  }
+  @include mq {
+    font-size: 4vw;
+  }
+}
+@mixin submit-btn {
+  font-size: 4vw;
+  width: 60vw;
+  height: 10vw;
+  margin: 7vw 17vw;
+  border-radius: 2rem;
+  &:hover {
+    background-color: $theme-blue;
+  }
+}
+.submit-btn {
+  font-size: 1.6vw;
+  width: 15vw;
+  height: 4vw;
+  margin: 5vw 14.5vw;
+  border: none;
+  color: #fff;
+  background-color: $theme-blue;
+  &:hover {
+    background-color: $theme-hblue;
+  }
+  @include mq-md {
+    @include submit-btn();
+  }
+  @include mq {
+    @include submit-btn();
+  }
+}
+@mixin message {
+  text-align: center;
+  font-size: 2vw;
+  @include mq-md {
+    font-size: 4vw;
+  }
+  @include mq {
+    font-size: 4vw;
+  }
+}
+.is-error {
+  @include message();
+  color: #b94747;
+}
+.is-success {
+  @include message();
+  color: #4db193;
+}
+.recaptcha_policy {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 11px;
+  color: #444;
+  @include mq-md {
+    font-size: 14px;
+  }
+  @include mq {
+    font-size: 14px;
+  }
+}
+.recaptcha_policy a {
+  font-size: 11px;
+  color: rgb(91, 201, 235);
+}
+.grecaptcha-badge { 
+  visibility: hidden;
+}
+
+// ******************************************** news *******************************
+
+.news-header {
+  width: 100vw;
+  height: 10vw;
+  background-color: $theme-blue;
+}
+.news-header-logo {
+  position: absolute;
+  left: 41vw;
+  width: 15vw;
+  height: 10vw;
+}
+.news-wrapper {
+  width: 75vw;
+  margin: 10vw auto;
+  margin-bottom: 20vw
+}
+.news-content-title {
+  font-size: 4vw;
+  text-align: center;
+  margin: 2vw 0;
+}
+.news-content-date {
+  font-size: 1.4vw;
+  margin-right: 3vw;
+  margin-bottom: 6vw;
+  text-align: right;
+}
+.news-content {
+  font-size: 1.8vw;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.top-link {
+  margin: 10vw 14.7vw;
+  a {
+    font-size: 2vw;
+    text-align: center;
+    width: 8vw;
+    height: 1.7vw;
+    padding: 2vw 5vw;
+    color: rgb(255, 255, 255);
+    border: 1px solid $theme-blue;
+    border-radius: 1vw;
+    background-color: $theme-blue;
+    &:hover {
+      background-color: $theme-hblue;
+    }
+  }
+}

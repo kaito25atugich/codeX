@@ -6,10 +6,8 @@ __pycache__/
 media
 images
 migrations
-static
 pass_settings.py
 .DS_Store
 Pipfile
 Pipfile.lock
 settings.py
-sqlite3
